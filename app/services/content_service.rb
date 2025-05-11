@@ -5,13 +5,13 @@ class ContentService
       if type == 'episodes'
         availabilities = availabilities.where(content_type: 'Season')
         seasons = availabilities.map(&:content).uniq
-        return seasons.map { |s| s.tv_show.episodes.where(season_number: s.number) }.flatten
+        return seasons.map(&:episodes).flatten
       else
         availabilities = availabilities.where(content_type: type.classify)
       end
     end
 
-    availabilities.map(&:content).uniq
+    availabilities.map { |a| a.content.as_json.merge(type: a.content_type.underscore) }.uniq
   end
 
   def self.get(type, id, user_id = nil)
@@ -23,7 +23,7 @@ class ContentService
       json['seasons'] = content.seasons
       json['episodes'] = content.episodes
     when 'seasons'
-      json['episodes'] = content.tv_show.episodes.where(season_number: content.number)
+      json['episodes'] = content.episodes
     when 'channels'
       json['channel_programs'] = content.channel_programs
     when 'channel_programs'

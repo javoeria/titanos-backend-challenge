@@ -16,4 +16,8 @@ class Season < ApplicationRecord
   has_many :availabilities, as: :content, dependent: :destroy
 
   validates :original_title, :number, presence: true
+
+  def episodes
+    tv_show.episodes.where(season_number: number)
+  end
 end

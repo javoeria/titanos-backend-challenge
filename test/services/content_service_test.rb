@@ -1,6 +1,13 @@
 require "test_helper"
 
 class ContentServiceTest < ActiveSupport::TestCase
+  test 'all available episodes by country' do
+    data = ContentService.all('gb', 'episodes')
+    assert_instance_of(Episode, data.sample)
+    assert_equal('Cruelty', data[0].original_title)
+    assert_equal(3600, data[0].duration_in_seconds)
+  end
+
   test 'get movie by id' do
     data = ContentService.get('movies', 1)
     assert_equal('Star Wars: Episode V - The Empire Strikes Back', data['original_title'])
@@ -45,6 +52,14 @@ class ContentServiceTest < ActiveSupport::TestCase
     assert_nil(data['year'])
     assert_nil(data['duration_in_seconds'])
     assert_nil(data['watched_time'])
+  end
+
+  test 'get channel program by id and user_id' do
+    data = ContentService.get('channel_programs', 2, 1)
+    assert_equal('Hey Arnold!', data['original_title'])
+    assert_nil(data['year'])
+    assert_nil(data['duration_in_seconds'])
+    assert_instance_of(Integer, data['watched_time'])
   end
 
   test 'search content by title' do
