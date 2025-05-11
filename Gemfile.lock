@@ -81,6 +81,9 @@ GEM
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
+    apipie-rails (1.4.2)
+      actionpack (>= 5.0)
+      activesupport (>= 5.0)
     ast (2.4.2)
     base64 (0.2.0)
     benchmark (0.4.0)
@@ -253,6 +256,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  apipie-rails
   debug
   mysql2 (~> 0.5)
   pry-rails
