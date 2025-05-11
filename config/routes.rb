@@ -7,6 +7,10 @@ Rails.application.routes.draw do
       get 'contents',           to: 'contents#index'
       get 'contents/:type/:id', to: 'contents#show'
       get 'contents/search',    to: 'contents#search'
+
+      get 'users/:id/favorite_programs', to: 'users#favorite_programs'
+      get 'users/:id/favorite_apps',     to: 'users#favorite_apps'
+      post 'users/:id/favorite_apps',    to: 'users#create_favorite_app'
     end
   end
 end

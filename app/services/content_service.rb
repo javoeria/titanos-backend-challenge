@@ -14,7 +14,7 @@ class ContentService
     availabilities.map(&:content).uniq
   end
 
-  def self.get(type, id)
+  def self.get(type, id, user_id = nil)
     model = type.classify.constantize
     content = model.find(id)
     json = content.as_json
@@ -27,7 +27,12 @@ class ContentService
     when 'channels'
       json['channel_programs'] = content.channel_programs
     when 'channel_programs'
-      json['watched_time'] = nil
+      if user_id.present?
+        fav = FavoriteProgram.find_by(user_id: user_id, channel_program_id: id)
+        json['watched_time'] = fav ? fav.watched_time : 0
+      else
+        json['watched_time'] = nil
+      end
       json['schedule'] = content.schedules
     end
 

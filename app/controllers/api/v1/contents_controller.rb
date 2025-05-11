@@ -11,8 +11,9 @@ module Api::V1
     api :GET, '/contents/:type/:id', 'Get specific data for each type of content'
     param :type, %w[movies tv_shows seasons episodes channels channel_programs], required: true
     param :id, :number, required: true
+    param :user_id, :number
     def show
-      data = ContentService.get(params[:type], params[:id])
+      data = ContentService.get(params[:type], params[:id], params[:user_id])
       render json: { data: data }, status: :ok
     rescue ActiveRecord::RecordNotFound
       render json: { error: 'Content not found' }, status: :not_found
