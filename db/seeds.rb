@@ -15,6 +15,7 @@ App.destroy_all
 Movie.destroy_all
 TvShow.destroy_all
 Channel.destroy_all
+User.destroy_all
 
 p 'movies'
 data['movies'].each do |movie_data|
@@ -61,3 +62,9 @@ data['channels'].each do |channel_data|
     end
   end
 end
+
+p 'users'
+user = User.create!(email: 'user@email.com')
+positions = (1..10).to_a
+App.all.each { |app| user.favorite_apps.create!(app: app, position: positions.delete(positions.sample)) }
+ChannelProgram.all.each { |cp| user.favorite_programs.create!(channel_program: cp, watched_time: rand(1..1000)) }

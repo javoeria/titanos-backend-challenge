@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_11_115601) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_11_150415) do
   create_table "apps", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -58,6 +58,26 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_11_115601) do
     t.index ["tv_show_id"], name: "index_episodes_on_tv_show_id"
   end
 
+  create_table "favorite_apps", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "position"
+    t.bigint "user_id"
+    t.bigint "app_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_id"], name: "index_favorite_apps_on_app_id"
+    t.index ["user_id"], name: "index_favorite_apps_on_user_id"
+  end
+
+  create_table "favorite_programs", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "watched_time"
+    t.bigint "user_id"
+    t.bigint "channel_program_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["channel_program_id"], name: "index_favorite_programs_on_channel_program_id"
+    t.index ["user_id"], name: "index_favorite_programs_on_user_id"
+  end
+
   create_table "movies", charset: "utf8mb4", force: :cascade do |t|
     t.string "original_title"
     t.integer "year"
@@ -90,6 +110,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_11_115601) do
     t.string "original_title"
     t.integer "year"
     t.integer "duration_in_seconds"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
