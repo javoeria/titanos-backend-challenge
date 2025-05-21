@@ -36,7 +36,7 @@ class ContentService
       json['schedule'] = content.schedules
     end
 
-    json['availabilities'] = content.availabilities.map { |a| { app: a.app.name, market: a.market } } if type != 'episodes'
+    json['availabilities'] = content.availabilities.includes(:app).map { |a| { app: a.app.name, market: a.market } } if type != 'episodes'
     json
   end
 

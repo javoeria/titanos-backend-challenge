@@ -18,6 +18,6 @@ class Season < ApplicationRecord
   validates :original_title, :number, presence: true
 
   def episodes
-    tv_show.episodes.where(season_number: number)
+    Episode.where(tv_show_id: tv_show_id, season_number: number)
   end
 end
